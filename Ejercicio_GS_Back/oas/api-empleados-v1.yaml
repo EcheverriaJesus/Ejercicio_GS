@@ -1,0 +1,203 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title:  API EMPLEADOS
+  description: |
+    API capaz de realizar la alta de empleados.
+  
+host: dev-api.ejercicio-tecnico.com.mx:8080
+basePath: /informacion-ejecutiva/administracion/v1
+
+schemes:
+   - https
+   - http
+produces:
+  - application/json
+  
+securityDefinitions:
+  Bearer:
+    description: >
+      Para acceder a la API se debe pasar un jwt token válido en todas las consultas. La siguiente sintaxis se debe utilizar en el encabezado
+      'Authorization' :
+        Bearer: eyJraWQiOiJvcHRpb25hbC11bmlxdWUtaWRlbnRpZmllci1mb3ItcHJpdmF0ZWtleS1oZXJlIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYif
+    type: apiKey
+    name: Authorization
+    in: header
+    
+security:
+  - Bearer: []
+
+paths:
+  /empleados:
+    post:
+      summary: Crear un nuevo empleado
+      description: | 
+              Inserta los eventos de crear empleados.
+      tags:
+        - Empleados
+      consumes: 
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: 'Solicitud Empleados:'
+          schema:
+            $ref: "#/definitions/Solicitud-crear-empleado"
+      responses:
+        201:
+          description: Creado
+          schema:
+            $ref: '#/definitions/Respuesta201'
+          examples:
+            application/json: |-
+              {
+                "mensaje": "Operación exitosa",
+                "folio": "891bf816-59f2-4345-ba7f-366980f36c31"
+              }
+        400:
+          description: Entrada incorrecta
+          schema:
+            $ref: '#/definitions/Respuesta400'
+        401:
+          description: Falla en autenticación
+          schema:
+            $ref: '#/definitions/Respuesta401'
+        500:
+          description: Operación inesperada
+          schema:
+            $ref: '#/definitions/Respuesta500'
+            
+# ------------------------------------------------------------- 
+
+definitions:
+  Solicitud-crear-empleado:
+    type: object
+    required:
+      - nombre
+      - apellidoPaterno
+      - apellidoMaterno
+      - numeroEmpleado
+      - numeroSeguroSocial
+      - rfc
+      - curp
+    properties:
+      nombre:
+        type: string
+        description: nombre o nombres del empleado
+        example: 'Jesus Noe'
+      apellidoPaterno:
+        type: string
+        description: apellido paterno del empleado
+        example: 'Echeverria'
+      apellidoMaterno:
+        type: string
+        description: apellido materno del empleado
+        example: 'Medina'
+      numeroEmpleado:
+        type: integer
+        description: número de empleado
+        example: 123456789
+      numeroSeguroSocial:
+        type: integer
+        description: número de seguro social del empleado
+        example: 44160133987
+      rfc:
+        type: string
+        description: rfc con homoclave del empleado
+        example: 'EEMJ0104139N9'
+      curp:
+        type: string
+        description: Clave única de registro de población del empleado
+        example: 'EEMJ010413HGRCDSA4'
+        
+# ------------------------------------------------------------- 
+  
+  Respuesta201:
+    type: object
+    properties:
+      mensaje:
+        type: string
+        description: Mensaje del estatus del proceso ejecutado
+        example: 'Operación exitosa'
+      folio: 
+        type: string
+        description: Folio en formato UUID de la transacción
+        example: '891bf816-59f2-4345-ba7f-366980f36c31'
+          
+  Respuesta400:
+    type: object
+    properties:
+      codigo:
+        type: string
+        description: Codigo de respuesta
+        example: '400.empleados.1.0'
+      mensaje:
+        type: string
+        description: Mensaje del estatus del proceso ejecutado
+        example: 'Petición no válida, favor de validar su información'
+      folio: 
+        type: string
+        description: Folio en formato UUID de la transacción
+        example: '892bf816-59f2-4345-ba7f-366980f36c31'
+      info:
+        type: string
+        description: Rutas de ayuda para atender el error
+        example:  'https://developer.com.mx/info#400.empleados.1.0'
+      detalles:
+        type: array
+        items:
+          type: string
+          description: Lista de errores
+          example: "El parámetro apellidoPaterno es requerido"
+      
+  Respuesta401:
+    type: object
+    properties:
+      codigo:
+        type: string
+        description: Codigo de respuesta
+        example: '401.empleados.1.0'
+      mensaje:
+        type: string
+        description: Mensaje del estatus del proceso ejecutado
+        example: 'Acceso no autorizado al recurso'
+      folio: 
+        type: string
+        description: Folio en formato UUID de la transacción
+        example: '891bf816-29f2-4345-ba7f-366980f36c31'
+      info:
+        type: string
+        description: Rutas de ayuda para atender el error
+        example: 'https://developer.com.mx/info#401.empleados.1.0'
+      detalles:
+        type: array
+        items:
+          type: string
+          example: 'Las llaves estan vencidas'
+  
+  Respuesta500:
+    type: object
+    properties:
+      codigo:
+        type: string
+        description: Codigo de respuesta
+        example: '500.empleados.1.0'
+      mensaje:
+        type: string
+        description: Mensaje del estatus del proceso ejecutado
+        example: 'Error interno del servidor'
+      folio: 
+        type: string
+        description: Folio en formato UUID de la transacción
+        example: '891bf816-59f2-4345-ba7f-366980f36c31'
+      info:
+        type: string
+        description: Rutas de ayuda para atender el error
+        example:  'https://developer.com.mx/info#500.empleados.1.0'
+      detalles:
+        type: array
+        items:
+          type: string
+          example: 'Hubo un error al procesar la solicitud con la información de la Base de Datos'
+        

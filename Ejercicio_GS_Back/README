@@ -1,0 +1,52 @@
+# API - EMPLEADOS
+
+> ### Tecnologias:
+
+**Cliente:** FastApi, Uvicorn, Pydantic
+
+**BD:** Postgres
+
+> ### Pasos para configurar y ejecutar el microservicio
+
+1.- Instalar el entorno virtual con el siguiente comando:
+```bash
+  pip install virtualenv
+```
+
+2.- Crear el entorno virtual con el siguiente comando:
+```bash
+  python -m venv venv
+```
+
+3.- Activar el entorno virtual con el siguiente comando:
+```bash
+  .\venv\Scripts\activate
+```
+
+4.- Instalar las librerías requeridas para esta api con el siguiente comando:
+```bash
+  pip install -r requirements.txt
+```
+
+5.- Levantar el microservicio con uno de los siguientes comandos:
+```bash
+  py run.py
+```
+
+> ⚠️ NOTA: LAS NUEVAS LIBRERÍAS DEBEN INSTALARSE DENTRO DEL ENTORNO VIRTUAL Y MANTENER EL `requirements.txt` ACTUALIZADO
+```bash
+  pip list
+  pip freeze > requirements.txt
+```
+
+> ### Docker - Pruebas
+
+1.- Crear imagen docker:
+```bash
+  docker build -t empleadoimage .
+```
+
+2.- Crear contenedor docker:
+```bash
+  docker run -d --name container_api_empleado -p 8000:8000 empleadoimage
+```

@@ -1,0 +1,11 @@
+# EJERCICIO GS - INSERTAR EMPLEADO
+
+> ### Tecnologias:
+
+**BD:** Instancia AWS RDS Postgres
+
+**Servidor:** FastApi, Uvicorn
+
+**Cliente:** Astro, React, Typescript, Tailwind css, Axios
+
+> ⚠️ NOTA: El parámetro id es autoincrementable y el parámetro de fecha de alta es insertado por el lado del cliente, ya que se obtiene la hora en que se manda el insert
